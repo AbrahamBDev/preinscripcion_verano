@@ -2,12 +2,11 @@ const mariadb = require("mariadb"); // Obtenemos el modulo de mariadb; el cual e
 require("dotenv").config();
 
 const pool = mariadb.createPool({
-    host : "localhost",
+    host : process.env.DATABASE_HOST,
     user : process.env.USER,
     password : process.env.PASSWORD,
     database : process.env.DATABASE,
     connectionLimit : 5
-}
-);
+});
 
 module.exports = pool;

@@ -32,3 +32,14 @@ CREATE TABLE inscripciones(
     id_usuario int not null
 
 );
+
+
+INSERT INTO materias (codigo, nombre)
+VALUES 
+("IM1421", "MATEMÁTICA I"),
+("IC1222", "FUNDAMENTOS DE LA INFORMÁTICA "),
+("IM1223", "LÓGICA MATEMÁTICA "),
+("IH1124", "LENGUAJE Y COMUNICACIÓN"),
+("IH1125", "INGLES I"),
+("FC0001", "FORMACION CONSTITUCIONAL")
+
