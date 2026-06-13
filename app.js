@@ -28,11 +28,11 @@ app.use(express.urlencoded({ extended: true })); // Permitimos que permita recib
 // - Activamos el renderizador de vistas.
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'modules/views')); // pasamos la ruta de nuestra carpeta modulos.
-app.set(express.static(path.join(__dirname,"modules/public")))
+app.use(express.static(path.join(__dirname,"modules/public")));
 
 // - Rutas
-const {isUser} = require("./modules/middlewares/login_verification.js");
-app.use("/",isUser ,require("./modules/routes/user.js")) // - Inicio de sesion, registro.
+
+app.use("/",require("./modules/routes/user.js")) // - Inicio de sesion, registro.
 
 
 

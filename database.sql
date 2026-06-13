@@ -36,7 +36,6 @@ CREATE TABLE inscripciones(
     id_materia int not null,
     id_periodo int not null,
     id_usuario int not null
-
 );
 
 
@@ -47,5 +46,8 @@ VALUES
 ("IM1223", "LÓGICA MATEMÁTICA "),
 ("IH1124", "LENGUAJE Y COMUNICACIÓN"),
 ("IH1125", "INGLES I"),
-("FC0001", "FORMACION CONSTITUCIONAL")
+("FC0001", "FORMACION CONSTITUCIONAL");
 
+INSERT INTO estado_periodo (nombre)
+VALUES
+("activo"), ("inactivo");

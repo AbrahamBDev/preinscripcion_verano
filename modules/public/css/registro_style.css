@@ -1,0 +1,116 @@
+body{
+    background-color: rgb(10, 11, 12);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#contenedor{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+#contenedor_registro{
+    display : flex;
+    gap : 25px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: rgb(10, 11, 12);
+    padding: 10px;
+    width:  100%;
+    max-width: 500px;
+    height: auto;
+    border: 1px solid rgb(27, 29, 31);
+    overflow: hidden;
+}
+
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    gap : 4px;
+    width: 55%;
+}
+
+
+input[type="text"]{
+    background-color: rgb(21, 25, 26);
+    border-style: none;
+    border: 2px solid rgb(46, 64, 168);
+    border-radius: 5px;
+    height: 50px;
+    color: rgb(199, 198, 198);
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0px 3px 10px rgb(0, 0, 0);
+}
+
+input[type="email"]{
+    background-color: rgb(21, 25, 26);
+    border-style: none;
+    border: 2px solid rgb(46, 64, 168);
+    border-radius: 5px;
+    height: 50px;
+    font-size: 15px;
+    color: rgb(199, 198, 198);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0px 3px 10px rgb(0, 0, 0);
+}
+
+
+#submit{
+    background: linear-gradient(to right, rgb(46, 64, 168), rgb(44, 109, 194));
+    color: white;
+    
+    border-style: none;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 55%;
+    height: 55px;
+    font-size: 18px;
+    transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+#encabezado{
+    width : 55%;
+}
+
+#encabezado h2{
+    color: rgb(44, 109, 194);
+}
+
+#encabezado h4{
+    color: rgb(238, 238, 238);
+}
+
+#imgContainer{
+    width: 110%;
+    border-radius: 100px;
+    overflow: hidden;
+    
+}
+
+img{
+    
+    object-fit: cover;
+}
+
+
+/*Animaciones del boton*/
+#submit:hover{
+    transform: translate(0px,-3px) scale(1.008);
+}
+
+a{
+    color: rgb(59, 125, 211);
+    text-decoration: underline;
+}
+
+a:visited,a:active{
+    color: rgb(59, 125, 211);
+    text-decoration: underline;
+}
+
