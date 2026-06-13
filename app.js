@@ -11,7 +11,7 @@ const session = require("express-session");
 app.use(session({
     secret: "he_cometido_el_peor_de_los_pecados_que_un_hombre_puede_cometer_..._no_he_sido_feliz._que_los_glaciares_del_olvido_me_arrastren_despiadados.",
     saveUninitialized : false,
-    resave : false, // para que no guarde sesiones repetidas (creo)
+    resave : false, // para que no guarde sesiones repetidas
     cookie :{
         httpOnly : true, // 
         secure : false,  // Para indicar si tenemos un protocolo de https  
@@ -22,16 +22,17 @@ app.use(session({
 
 
 // - Usamos middlewares
+app.use(express.json()); // Hacemos que los datos que reciba el express lo parsee a json.
 app.use(express.urlencoded({ extended: true })); // Permitimos que permita recibir datos de formularios
 
 // - Activamos el renderizador de vistas.
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'modules/views')); // pasamos la ruta de nuestra carpeta modulos.
-
+app.set(express.static(path.join(__dirname,"modules/public")))
 
 // - Rutas
-
-app.use("/", require("./modules/routes/user.js")) // - Inicio de sesion, registro.
+const {isUser} = require("./modules/middlewares/login_verification.js");
+app.use("/",isUser ,require("./modules/routes/user.js")) // - Inicio de sesion, registro.
 
 
 

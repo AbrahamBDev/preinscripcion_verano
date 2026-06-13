@@ -6,7 +6,7 @@ const session = require("express-session");
 // Rutas de usuario
 
 router.get("/registrar", async (req,res) =>{
-    res.send("Log: Se ha accedido a la ruta de creacion de cuentas");
+    res.render("registro")
 });
 
 

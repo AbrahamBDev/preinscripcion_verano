@@ -1,0 +1,46 @@
+body{
+    background-color: rgb(10, 11, 12);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#contenedor{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+#contenedor_registro{
+    display : flex;
+    gap : 5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+     background-color: rgb(10, 11, 12);
+    padding: 10px;
+    height: 90%;
+    width:  40%;
+    border: 1px solid rgb(27, 29, 31);
+}
+
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    gap : 4px
+}
+
+
+input[type="text"]{
+    background-color: rgb(21, 25, 26);
+    border-style: none;
+    border: 2px solid rgb(46, 64, 168);
+    border-radius: 5px;
+    height: 40px;
+    width: 50%;
+    box-shadow: 0px 3px 10px rgb(0, 0, 0);
+    
+}
+
