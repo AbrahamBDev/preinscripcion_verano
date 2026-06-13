@@ -15,4 +15,6 @@ router.get("/iniciar_sesion", async (req,res) =>{
     res.send("Log: Se ha accedido a la ruta de iniciar sesion");
 });
 
+module.exports = router;
+
 
