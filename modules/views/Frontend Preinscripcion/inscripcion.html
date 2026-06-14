@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Inscripción</title>
+    <link rel="stylesheet" href="Login_Style.css">
+</head>
+<body>
+    <div class="login-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="avatar">Avatar</div>
+                <h3>Hola, Estudiante</h3>
+                <p class="role">Matrícula: #202601</p>
+            </div>
+            <nav class="menu">
+                <a href="usuario.html">Preinscripción</a>
+                <a href="/" class="logout-btn">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h2>Formulario de Selección de Asignaturas</h2>
+                <p>Selecciona las materias correspondientes a tu carga académica para el período 2026-3.</p>
+            </header>
+
+            <div class="enrollment-box">
+                <div class="form-header">
+                    <h3>Carga de Materias</h3>
+                    <p class="form-instructions">Por favor, elige dos asignaturas distintas de la lista disponible y presiona el botón "Inscribir".</p>
+                </div>
+
+                <hr class="divider">
+
+                <form action="/guardar-inscripcion" method="POST" class="enrollment-form">
+    
+    <div class="input-group">
+        <label for="materia1">Asignatura 1:</label>
+        <select id="materia1" name="materia1" class="materia-select" required>
+            <option value="" disabled selected>-- Selecciona la primera materia --</option>
+            <option value="1">Física II</option>
+            <option value="2">Investigación de Operaciones</option>
+            <option value="3">Estructuras Discretas II</option>
+            <option value="4">Teoría de Sistemas</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label for="materia2">Asignatura 2:</label>
+        <select id="materia2" name="materia2" class="materia-select" required>
+            <option value="" disabled selected>-- Selecciona la segunda materia --</option>
+            <option value="1">Física II</option>
+            <option value="2">Investigación de Operaciones</option>
+            <option value="3">Estructuras Discretas II</option>
+            <option value="4">Teoría de Sistemas</option>
+        </select>
+    </div>
+
+    <div class="form-actions">
+        <a href="usuario.html" class="btn-table btn-view" style="padding: 0.75rem 1.5rem; text-decoration: none; display: inline-block; border-radius: 5px;">
+            Cancelar
+        </a>
+        <button type="submit" class="btn-enroll">Inscribir Materias</button>
+    </div>
+</div>
+</form>
+
+<script>
+    // Seleccionamos ambos elementos <select>
+    const select1 = document.getElementById('materia1');
+    const select2 = document.getElementById('materia2');
+
+    function actualizarOpciones() {
+        const val1 = select1.value;
+        const val2 = select2.value;
+
+        // --- Validamos el Select 2 basado en lo que se eligió en el Select 1 ---
+        Array.from(select2.options).forEach(option => {
+            // Si la opción no es la por defecto y es igual a la seleccionada en select1, se deshabilita
+            if (option.value !== "" && option.value === val1) {
+                option.disabled = true;
+                option.style.color = "#aaa"; // Efecto visual gris de bloqueado
+            } else {
+                option.disabled = false;
+                option.style.color = ""; // Restablece el color normal
+            }
+        });
+
+        // --- Validamos el Select 1 basado en lo que se eligió en el Select 2 ---
+        Array.from(select1.options).forEach(option => {
+            // Si la opción no es la por defecto y es igual a la seleccionada en select2, se deshabilita
+            if (option.value !== "" && option.value === val2) {
+                option.disabled = true;
+                option.style.color = "#aaa";
+            } else {
+                option.disabled = false;
+                option.style.color = "";
+            }
+        });
+    }
+
+    // Escuchamos el evento 'change' (cuando el usuario cambia de opción) en ambos selectores
+    select1.addEventListener('change', actualizarOpciones);
+    select2.addEventListener('change', actualizarOpciones);
+</script>
+            </div>
+        </main>
+
+</body>
+</html>
