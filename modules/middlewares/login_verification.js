@@ -6,7 +6,7 @@ const isUser = async (req,res,next) =>{
     console.log("- Verificando usuario");
     if (!req.session.userId || !req.session || req.session.rol != "usuario"){ // verificamos si la sesion es invalida
         console.log("No se ha detectado ninguna sesion. Inicie sesion nuevamente.")
-        res.send("No se ha detectado ninguna sesion");
+        res.send("Error: No se ha detectado ninguna sesion");
 
     }else{
         // La sesion es valida
@@ -27,9 +27,20 @@ const isAdmin = async (req,res,next) =>{
     }
 }
 
+const isLogged =  async (req,res,next) =>{
+    console.log("Estas dentro de isLogged")
+    if (req.session && req.session.rol == "usuario"){
+        console.log("Error: se encuentra una sesion activa");
+        return res.redirect("/home");
+    }else{
+        // no esta logeado
+        next();
+    }
+}
 
 
-module.exports = {isUser} // Exportamos las funciones
+
+module.exports = {isUser, isLogged} // Exportamos las funciones
 
 
 

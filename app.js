@@ -38,13 +38,6 @@ app.use("/",require("./modules/routes/user.js")) // - Inicio de sesion, registro
 
 // == Enrrutamiento
 
-app.get("/", async (req,res) =>{
-    res.send("Respuesta del server.");
-    const conn = await db.getConnection(); // Obtenemos conexion de la base de datos
-    console.log("Conexion realizada con exito");
-    conn.end() // Finalizamos conexion.
-});
-
 
 app.listen(port,()=>{ // El listen se encarga de escuchar y levantar el servidor.
     console.log("\n --- SISTEMA DE PREINSCRIPCION DE CURSOS ----\n");

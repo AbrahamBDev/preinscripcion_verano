@@ -48,7 +48,7 @@ input[type="text"]{
     box-shadow: 0px 3px 10px rgb(0, 0, 0);
 }
 
-input[type="email"]{
+input[type="email"],input[type="password"]{
     background-color: rgb(21, 25, 26);
     border-style: none;
     border: 2px solid rgb(46, 64, 168);
@@ -112,5 +112,19 @@ a{
 a:visited,a:active{
     color: rgb(59, 125, 211);
     text-decoration: underline;
+}
+
+
+#divAlerta{
+    border-radius: 5px;
+    background-color: rgb(63, 39, 39);
+    border-left: 4px solid rgb(179, 65, 65);;
+    color: rgb(166, 93, 93);
+    display: none; 
+    padding: 20px;
+}
+
+#divAlerta.mostrar{
+    display: block;
 }
 

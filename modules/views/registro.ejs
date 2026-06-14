@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/registro_style.css">
+
     <title>Registrarse</title>
 </head>
 <body>
 
-    <form action="/registrar" method="post">
+    <form id="formularioRegistro" action="/registrar" method="post">
         <div id="contenedor">
             <div id="contenedor_registro">
                 <div id="imgContainer">
@@ -17,25 +18,36 @@
                 
                 <div id="encabezado">
                     <h2>Registre su usuario</h2>
-                    <h4>Rellene campos correspondientes</h4>
-                    
+                    <h4>Rellene campos correspondientes</h4>                    
+                </div>
+
+                <div id="divAlerta">
+                    <% if (locals.error){%>
+                        <p id="textoAlerta"><%=error%></p>
+                    <%}else{%>
+                        <p id="textoAlerta"></p>
+                    <%}%>
                 </div>
                 <div class="campo">
                     <label for="nombre">Nombre</label>
                     <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre" required>
                 </div>
+                <div class="campo">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" placeholder="Ingrese su nombre" required>
+                </div>
 
                 <div class="campo">
-                    <label for="email">Correo</label>
-                    <input type="email" name="email" id="email" placeholder="Ingrese su correo" required>
+                    <label for="correo">Correo</label>
+                    <input type="email" name="correo" id="correo" placeholder="Ingrese su correo" required>
                 </div>
                 <div class="campo">
-                    <label for="password">Contraseña</label>
-                    <input type="text" name="password" id="password" placeholder="Ingrese su contraseña" required>
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" name="contrasena" id="contrasena" placeholder="Ingrese su contraseña" required>
                 </div>
                 <div class="campo">
-                    <label for="passwordAgain">Ingrese su contraseña nuavemente</label>
-                    <input type="text" name="passwordAgain" id="passwordAgain" placeholder="Ingrese nuevamente" required>
+                    <label for="contrasena2">Ingrese su contraseña nuavemente</label>
+                    <input type="password" name="contrasena2" id="contrasena2" placeholder="Ingrese nuevamente" required>
                 </div>
                 
                 <button id="submit" type="submit">Registrarse</button>
@@ -46,17 +58,52 @@
 
 
     <script>
-        /*
-        const botonSubmit = document.getElementById("submit");
-        const nombre = document.getElementById("nombre")
-        botonSubmit.addEventListener("click",(e)=>{
-            
+        
+        const form = document.getElementById("formularioRegistro");
+        // Obtenemos los inputs de los formularios
+        const contrasena = document.getElementById("contrasena");
+        const contrasena2 = document.getElementById("contrasena2");
+        const textoAlerta = document.getElementById("textoAlerta");
+        const nombre = document.getElementById("nombre");
+        const apellido = document.getElementById("apellido");
 
-            alert(nombre);
-            
+        const divAlerta = document.getElementById("divAlerta");
 
+        form.addEventListener("submit", (e)=>{
+
+            if (!nombre.value || !contrasena.value || !contrasena2.value || !apellido.value){
+                e.preventDefault() // Prevenimos la carga.
+                textoAlerta.textContent = "Faltan campos por rellenar";
+                divAlerta.classList.add("mostrar");
+                divAlerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if (!(nombre.value.length > 3)){
+                 e.preventDefault() // Prevenimos la carga.
+                textoAlerta.textContent = "El nombre debe tener mas de 3 caracteres";
+                divAlerta.classList.add("mostrar");
+                divAlerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }else if (!(apellido.value.length > 3)){
+                e.preventDefault() // Prevenimos la carga.
+                textoAlerta.textContent = "El nombre debe tener mas de 3 caracteres";
+                divAlerta.classList.add("mostrar");
+                divAlerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if (contrasena.value.length < 8){
+                e.preventDefault() // Prevenimos la carga.
+                textoAlerta.textContent = "La contraseña es corta";
+                divAlerta.classList.add("mostrar");
+                divAlerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if (contrasena.value != contrasena2.value){
+                e.preventDefault() // Prevenimos la carga.
+                textoAlerta.textContent = "Las contraseñas no coinciden.";
+                divAlerta.classList.add("mostrar");
+                divAlerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         });
-        */
 
 
     </script>

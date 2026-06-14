@@ -13,15 +13,21 @@ CREATE TABLE usuarios(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre varchar(30) NOT NULL,
     apellido varchar(30) NOT NULL,
-    usuario varchar(20) NOT NULL UNIQUE,
-    contrasena varchar(40) NOT NULL
-    rol varchar(10) NOT NULL;
+    correo varchar(320) NOT NULL UNIQUE,
+    contrasena varchar(40) NOT NULL,
+    rol_id int not null
+);
+
+CREATE TABLE roles(
+    id int PRIMARY key AUTO_INCREMENT,
+    nombre varchar(20) not null
+
 );
 
 CREATE TABLE periodos(
     id int PRIMARY KEY AUTO_INCREMENT,
     periodo varchar(10) UNIQUE not null,
-    nombre varchar(30) not null
+    nombre varchar(30) not null,
     estado_id int not null
 );
 
@@ -51,3 +57,7 @@ VALUES
 INSERT INTO estado_periodo (nombre)
 VALUES
 ("activo"), ("inactivo");
+
+INSERT INTO roles (nombre)
+VALUES
+("usuario"), ("admin");
