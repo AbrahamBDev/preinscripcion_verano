@@ -61,18 +61,7 @@ input[type="email"],input[type="password"]{
 }
 
 
-#submit{
-    background: linear-gradient(to right, rgb(46, 64, 168), rgb(44, 109, 194));
-    color: white;
-    
-    border-style: none;
-    border-radius: 5px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 55%;
-    height: 55px;
-    font-size: 18px;
-    transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
-}
+
 
 #encabezado{
     width : 55%;
@@ -98,6 +87,18 @@ img{
     object-fit: cover;
 }
 
+
+#submit{
+    background: linear-gradient(to right, rgb(46, 64, 168), rgb(44, 109, 194));
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 55%;
+    height: 55px;
+    font-size: 18px;
+    transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
 
 /*Animaciones del boton*/
 #submit:hover{

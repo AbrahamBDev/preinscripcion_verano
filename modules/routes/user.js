@@ -16,9 +16,7 @@ router.get("/registrar",isLogged, async (req,res) =>{
 
 router.post("/registrar", isLogged, registrarController);
 
-router.get("/iniciar_sesion", isLogged, async (req,res) =>{
-    res.send("Log: Se ha accedido a la ruta de iniciar sesion");
-});
+router.get("/iniciar_sesion", isLogged, inicioSesionController);
 
 router.get("/home", isUser, async (req,res) => {
     res.send("Bienvenido de vuela");

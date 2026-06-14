@@ -1,6 +1,7 @@
 const { Query } = require("pg");
 const db = require("../models/database.js");// Importamos a la base de datos.
 const {registroQuery} = require("../models/registroQuery.js"); 
+const {inicioQuery} = require("../models/inicioQuery.js");
 const session = require("express-session");
 // Lógica de ruta de usuario
 
@@ -46,5 +47,13 @@ const registrarController = async (req,res)=>{
     
     }
 } 
+
+const iniciarSesionController = async (req,res)=>{
+    const {email, password} = req.body; // Obtenemos el usuario y contraseña
+
+    const 
+
+}
+
 
 module.exports = {registrarController};
