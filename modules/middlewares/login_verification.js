@@ -3,35 +3,37 @@ const session = require("express-session");
 
 // Funcion para verificar si el usuario esta en la base de datos
 const isUser = async (req,res,next) =>{
-    console.log("- Verificando usuario");
-    if (!req.session.userId || !req.session || req.session.rol != "usuario"){ // verificamos si la sesion es invalida
-        console.log("No se ha detectado ninguna sesion. Inicie sesion nuevamente.")
-        res.send("Error: No se ha detectado ninguna sesion");
-
+    console.log("- Se ha entrado a la verificacion de usuario");
+    if (req.session.rol != "usuario"){ // Si no es usuario, redirijir a la ruta de administrador.
+        return res.redirect("/dashboard");
     }else{
-        // La sesion es valida
-        next();
+        next(); // si es usuario, entonces, continuar.
     }
 }
 
 
 const isAdmin = async (req,res,next) =>{
-    console.log("- Verificando usuario");
-    if ( !req.session ||!req.session.userId || req.session.rol != "admin"){ // verificamos si la sesion es invalida
+    console.log("- Se ha entrado a la verificacion de admin");
+    if (!req.session || !req.session.userId){ // verificamos si la sesion es invalida
         console.log("No se ha detectado ninguna sesion. Inicie sesion nuevamente.")
-        res.send("No se ha detectado ninguna sesion");
-
+        return res.render("inicio_sesion",{error: "No hay una sesion activa. Ingrese sesion nuevamente"});
+    }
+    if (req.session.rol != "admin"){ // si no es administrador, redirijir a la ruta de usuario
+        return res.redirect("/principal");
     }else{
-        // La sesion es valida
         next();
     }
 }
 
 const isLogged =  async (req,res,next) =>{
     console.log("Estas dentro de isLogged")
-    if (req.session && req.session.rol == "usuario"){
+    if (req.session && (req.session.rol == "usuario" || req.session.rol == "admin")){
         console.log("Error: se encuentra una sesion activa");
-        return res.redirect("/home");
+        if (req.session.rol == "usuario"){
+            return res.redirect("/principal");
+        }else{
+            return res.redirect("/dashboard");
+        }
     }else{
         // no esta logeado
         next();
@@ -40,7 +42,7 @@ const isLogged =  async (req,res,next) =>{
 
 
 
-module.exports = {isUser, isLogged} // Exportamos las funciones
+module.exports = {isUser, isLogged, isAdmin} // Exportamos las funciones
 
 
 

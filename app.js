@@ -37,8 +37,6 @@ app.use("/",require("./modules/routes/user.js")) // - Inicio de sesion, registro
 
 
 // == Enrrutamiento
-
-
 app.listen(port,()=>{ // El listen se encarga de escuchar y levantar el servidor.
     console.log("\n --- SISTEMA DE PREINSCRIPCION DE CURSOS ----\n");
     console.log("- Log: Sistema levantado");
