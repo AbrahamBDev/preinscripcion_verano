@@ -106,10 +106,6 @@ body{
 }
 
 
-
-
-
-
 .admin-table{
     border-collapse: collapse;
     margin: 25px 0px;  
@@ -139,6 +135,113 @@ body{
 
 #divAlerta.mostrar{
     display: block;
+}
+
+
+/*Estilos de el contenedor*/
+
+#modal-delete-container{
+    background-color: rgba(16, 14, 14, 0.643);
+    width: 100%;
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s opacity cubic-bezier(0.25, 0.46, 0.45, 0.94), 0.5 visibility cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+
+#modal-delete{
+    background-color: rgb(10, 11, 12);
+    padding: 20px;
+    display: flex;
+    gap : 20px;
+    flex-direction: column;
+    border: 1px solid rgb(59, 41, 43);
+    border-radius: 10px;
+    align-items: center;
+}
+
+#modal-buttons{
+    display: flex;
+    justify-content: center;
+    gap : 10px;
+    width : 100%
+}
+
+
+#modal-buttons button{
+    color: white;
+   
+    text-align: center;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 55px;
+    width: 140px;
+    font-size: 18px;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.629);
+    transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);   
+}
+
+#eliminar-periodo{
+    background-color: rgb(42, 30, 30);
+    border: 1px solid rgb(117, 59, 59);
+    
+}
+
+#eliminar-periodo:hover{
+    box-shadow: 0px 3px 20px rgba(117, 59, 59, 0.196);
+    transform: translate(0,-3px);
+}
+
+
+#regresar{
+    background-color: rgb(17, 19, 21);
+    border : 1px solid rgb(48, 54, 60)
+}
+
+#regresar:hover{
+    transform: translate(0,-3px);
+}
+
+
+
+#modal-delete-container.mostrar{
+    opacity: 1;
+    visibility: visible;
+}
+
+
+#message-red{
+    color: rgb(213, 89, 89);
+}
+
+#normal-text{
+    color: rgb(244, 244, 244);
+}
+
+#info{
+    text-align: center;
+}
+
+
+
+#disclaimer-content{
+    width: 90%;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(63, 39, 39);
+    border-left: 4px solid rgb(179, 65, 65);;
+    color: rgb(166, 93, 93);
+    
+}
+
+#disclaimer-content h3{
+    color: rgb(220, 121, 121);
 }
 
 
