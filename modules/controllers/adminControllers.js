@@ -81,4 +81,33 @@ const nuevoPeriodo = async (req,res,next)  =>{
     }
 }
 
-module.exports = {solicitudPeriodos,nuevoPeriodo};
+const cerrarPeriodoVista = async (req,res) => {
+    try{
+        // Tomamos la id del periodo que viene en el req
+        const periodoId = req.params.id;
+
+        if (!periodoId){ 
+            return res.render("dashboard",{tipo:"error", mensaje:"El periodo a cerrar no existe"});
+        }
+
+        const periodo = await obtenerPeriodo();
+        
+        if (periodo.length == 0){
+            return res.render("dashboard",{tipo:"error", mensaje:"El Periodo no existe."});
+        }
+
+        const periodo = periodos[0]; // Obtenemos solo el primer registro del arreglo
+
+        res.render("cerrar_periodo",{periodo});
+
+    }catch(err){
+        console.log("Ha ocurrido un error al cerrar un periodo.");
+        console.log("Mas informacion en:");
+        console.log(err);
+        return res.render("dashboard",{tipo:"error", mensaje:"Ha ocurrido un error al obtener el periodo."});
+    }
+
+}
+
+
+module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista};

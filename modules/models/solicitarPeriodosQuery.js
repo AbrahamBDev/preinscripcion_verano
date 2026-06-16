@@ -1,5 +1,20 @@
 const db = require("./database.js");
 
+
+const solicitarPeriodo = async (id) =>{
+    let conn;
+    try{
+        conn = await db.getConnection();
+        const query = "SELECT nombre FROM periodos WHERE id = ?";
+        const periodo = await conn.query(query,id);
+        return periodo;
+
+    }catch(err){
+        console.log("Ha ocurrido un error al obtener un periodo");
+        throw err;
+    }
+}
+
 const solicitarPeriodos = async (offset) =>{
     let conn;
     try{
@@ -84,4 +99,4 @@ const existeColisionFechas = async (fechaComienzo, fechaFinal)=>{
 
 
 
-module.exports = {solicitarPeriodos, existePeriodoAbierto, existeColisionFechas};
+module.exports = {solicitarPeriodo,solicitarPeriodos, existePeriodoAbierto, existeColisionFechas};
