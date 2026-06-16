@@ -1,4 +1,4 @@
-const {solicitarPeriodos, existePeriodoAbierto} = require("../models/solicitarPeriodosQuery.js");
+const {solicitarPeriodos, existePeriodoAbierto,existeColisionFechas} = require("../models/solicitarPeriodosQuery.js");
 const {insertarPeriodo} = require("../models/insertarPeriodoQuery.js")
 const solicitudPeriodos = async (req,res)  =>{
     try{
@@ -25,8 +25,11 @@ const nuevoPeriodo = async (req,res,next)  =>{
 
         // verificamos si existe un periodo activo antes de la subida (Para evitar errores)
         const periodoActivo = await existePeriodoAbierto();
-
-        if (!periodoActivo){
+        console.log("Lo que he recibido:")
+        console.log(periodoActivo);
+        console.log("----");
+        
+        if (periodoActivo.length == 0){
             // como no hay periodo activo, tomamos nuestras entradas, creamos una conexion con la base de datos, y los enviamos.
             if (!nombre || !periodo || !fechaComienzo || !fechaFinal){
                 return res.render("nuevo_periodo", {tipo : "error", mensaje: "Hubo un error con alguno de los campos. Chequee y vuelva a internar"});
@@ -43,16 +46,22 @@ const nuevoPeriodo = async (req,res,next)  =>{
             const FechaFinalFormat = new Date(fechaFinal);
             const FechaComienzoFormat = new Date(fechaComienzo);
 
-            if (!(fechaComienzoFormat => FechaFinalFormat)){
+            if ((FechaComienzoFormat >= FechaFinalFormat)){
                 return res.render("nuevo_periodo", {tipo:"error", mensaje : "La fecha de comienzo no puede ser superior a la fecha de cierre"})
             }
 
             // En el caso de que pase todas sus validaciones, procederemos a insertar en la base de datos el nuevo periodo
 
+            const periodoFechas = await existeColisionFechas(fechaComienzo,fechaFinal);
+
+            if (periodoFechas > 0){
+                return res.render("nuevo_periodo",{mensaje:"Error. Las fechas del periodo colisionan con las fechas de otros periodos", tipo:"error"});
+            }
+
             const insercion = await insertarPeriodo(nombre,periodo,fechaFinal,fechaComienzo);
 
-            if (insercion.insertId){
-                res.render("dashboard",{mensaje:"Periodo creado con exito!", tipo:"sucess"});
+            if (insercion){
+                res.render("dashboard",{mensaje:"Periodo creado con exito!", tipo:"success"});
             }else{
                 res.render("dashboard",{mensaje:"Hubo un error al crear el periodo", tipo:"error"});
             }
@@ -67,6 +76,8 @@ const nuevoPeriodo = async (req,res,next)  =>{
     }catch (err) {
         console.log("Ha ocurrido un error al crear el nuevo periodo");
         console.log(err);
+        return res.render("dashboard",{mensaje:"Hubo un error al crear el periodo.", tipo:"error"});
+
     }
 }
 

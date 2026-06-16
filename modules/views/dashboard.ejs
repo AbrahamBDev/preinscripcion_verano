@@ -37,8 +37,9 @@
             </div>
             
             <nav class="menu">
-                <a href="#" class="active">Gestión de Períodos</a>
-                <a href="/" id="logout-btn">Cerrar Sesión</a>
+                <form action="/cerrar_sesion" method="post">
+                    <button id="botonCerrarSesion">Cerrar sesion</button>
+                </form>
             </nav>
            
 
@@ -71,7 +72,7 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Código</th>
+                          
                             <th>Período</th>
                             <th>Fecha de Inicio</th>
                             <th>Fecha de Cierre</th>
@@ -81,27 +82,6 @@
                     </thead>
                     <tbody id="table-content">
                         <tr>
-                            <td></td>
-                            <td>2026-1</td>
-                            <td>09/03/2026</td>
-                            <td>10/07/2026</td>
-                            <td><span class="status-pill status-open">Abierto</span></td>
-                            <td>
-                                <button class="btn-table btn-view">Consultar Alumnos</button>
-                                <button class="btn-table btn-danger">Cerrar Período</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>2025-2</td>
-                            <td>06/10/2025</td>
-                            <td>14/02/2026</td>
-                            <td><span class="status-pill status-closed">Cerrado / Finalizado</span></td>
-                            <td>
-                                <button class="btn-table btn-view">Consultar Reporte</button>
-                                <button class="btn-table btn-disabled" disabled>Cerrado</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -171,8 +151,6 @@
                 // Obtenemos los periodos:
                 const datos = await obtenerPeriodos();
                 const periodos = datos.rows; // obtenemos el array de periodos
-               
-                
 
                 // Iteramos los periodos y agregamos los elementos :
 
@@ -182,33 +160,30 @@
                     
                     if (p.estadoPeriodo == "activo"){
                         fila.innerHTML = `
-                            <td></td>
+                          
                             <td>${p.periodoCodigo}</td>
-                            <td>00000</td>
-                            <td>0000000</td>
+                            <td>${p.fechaComienzo}</td>
+                            <td>${p.fechaFinal}</td>
                             <td><span class="status-pill status-open">Abierto</span></td>
                             <td>
-                                <button class="btn-table btn-view">Consultar</button>
-                                <button class="btn-table btn-danger">Cerrar Período</button>
+                                <a href="/admin/consultar_periodo/${p.periodoId}" class="boton-consultar-periodo">Consultar</a>
+                                <a href="/admin/cerrar_periodo/${p.periodoId}" class="boton-cerrar-periodo">Cerrar Período</a>
                             </td>
                         `
                     }else{
                         fila.innerHTML = `
-                            <td></td>
                             <td>${p.periodoCodigo}</td>
-                            <td>00000</td>
-                            <td>0000000</td>
+                            <td>${p.fechaComienzo}</td>
+                            <td>${p.fechaFinal}</td>
                             <td><span class="status-pill status-close">inactivo</span></td>
                             <td>
-                                <button class="btn-table btn-view">Consultar</button>
+                                <a href="/admin/consultar_periodo/${p.periodoId}" class="boton-consultar-periodo">Consultar</a>
                             </td>
                         `
                     }
 
-                    // Insertamos el contenido
                     contenidoTabla.appendChild(fila);
-
-
+                
                 });
 
 
@@ -217,7 +192,6 @@
                 console.log(error);
                 contenidoTabla.tableContent = "Ha ocurrido un error al obtener los datos";
             }
-
         }
 
 
@@ -233,16 +207,15 @@
                 console.log("Sumando..")
                 paginaActual++;
                 paginado.textContent = paginaActual;
-
                 await dibujarPeriodos();
             }
         });
 
         botonAnterior.addEventListener("click", async ()=>{
             console.log("click detectado");
-            console.log(`Paginas totales: ${paginasTotales}`)
+            console.log(`Paginas totales: ${paginasTotales}`);
             if (paginaActual > 1){
-                console.log("Restando..")
+                console.log("Restando..");
                 paginaActual--;
                 paginado.textContent = paginaActual;
                 console.log(paginaActual);
@@ -260,8 +233,6 @@
         });
 
         // Manejo de notificaciones
-
-    
         const escucharErrores = ()=>{
             const mensaje = "<%= locals.mensaje %>" //obtenemos el mensaje que recibimos de ejs
             const tipoMensaje = "<%= locals.tipo %>" // Obtenemos el tipo de alerta
@@ -283,7 +254,7 @@
                 divAlerta.classList.add("error");
             }
         }
-       
+
 
         document.addEventListener("DOMContentLoaded", dibujarPeriodos);
         document.addEventListener("DOMContentLoaded",escucharErrores);

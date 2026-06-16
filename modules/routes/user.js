@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const session = require("express-session");
 const {isUser, isLogged, isAdmin} = require("../middlewares/login_verification.js");
-const {registrarController, iniciarSesionController, redireccionController} = require("../controllers/userControllers.js");
+const {registrarController, iniciarSesionController, redireccionController, cerrarSesionController} = require("../controllers/userControllers.js");
 
 
 // Rutas de usuario
@@ -18,6 +18,7 @@ router.get("/iniciar_sesion", isLogged, async (req,res) =>{
     res.render("inicio_sesion",{});
 });
 
+router.post("/cerrar_sesion", cerrarSesionController);
 
 router.post("/iniciar_sesion", isLogged, iniciarSesionController);
 

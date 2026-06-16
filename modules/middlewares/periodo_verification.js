@@ -4,7 +4,7 @@ const verificacionPeriodo = async (req,res,next)  =>{
         console.log("Ha elegido crear un nuevo periodo");
         const periodoActivo = await existePeriodoAbierto();
 
-        if (periodoActivo){
+        if (periodoActivo.length != 0){
             console.log("Error: No es posible crear un periodo si uno esta activo");
             console.log("Periodo activo: ");
             console.log(periodoActivo);

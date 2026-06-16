@@ -104,5 +104,23 @@ const redireccionController = async (req,res)=>{
     }
 };
 
+const cerrarSesionController = (req,res)=>{
+    console.log("- Ha elegido cerrar sesion");
+    req.session.destroy((err) =>{
 
-module.exports = {registrarController, iniciarSesionController, redireccionController};
+        if(err){
+            console.log(err);
+            console.log("Error, se encuentra una sesion activa. Redirijiendo a la vista principal");
+            res.redirect("/home");
+        }
+
+        // removemos la cookie que guarda nuestros datos.
+        res.clearCookie("connect.sid") // Ingresamos el nombre de nuestra cookie en la funcion clearCookie. En este caso, como no se le asignó ningun nombre, usamos el nombre predeterminado.
+
+        res.redirect("/iniciar_sesion") // redirijimos;
+    }); // destruimos la sesion
+
+}
+
+
+module.exports = {cerrarSesionController,registrarController, iniciarSesionController, redireccionController};

@@ -48,11 +48,11 @@ body{
     flex-direction: row;
     color: white;
     border-radius: 10px;
-    background-color: rgb(10, 11, 12);
+    
     
 }
 
-.menu a{
+.menu button{
     display: flex;
     align-items: center;
     width: auto;
@@ -61,12 +61,13 @@ body{
     padding: 20px;
     text-decoration: none;
     color: white;
-    
+    cursor: pointer;
+    font-size: 16px;
     transition: 0.35s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
 
-.menu a:hover{
+.menu button:hover{
     transform: translate(0px, -6px);
     
 }
@@ -78,8 +79,9 @@ body{
     gap: 20px;
 }
 
-#logout-btn{
+#botonCerrarSesion{
     background-color: rgb(35, 19, 21);
+    border: none;
     color: rgb(173, 81, 92);
 }
 
