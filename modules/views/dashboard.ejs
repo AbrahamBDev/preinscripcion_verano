@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Control de Períodos</title>
+    <link rel="stylesheet" href="/css/adminStyle.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="sidebar">
+            
+            <div class="user-profile">
+                <h3>Panel Admin</h3>
+                <p class="role">Control de Ciclos</p>
+            </div>
+            
+            <nav class="menu">
+                <a href="#" class="active">Gestión de Períodos</a>
+                <a href="/" id="logout-btn">Cerrar Sesión</a>
+            </nav>
+           
+
+        </header>
+
+        <main class="main-content">
+                <div id="divAlerta"> 
+                    <p id="textoAlerta"></p>
+                </div>
+    
+            <div class="content-header">
+                <h2>Administración de Períodos</h2>
+                <p>Visualiza los periodes de las preinscripciones de verano existentes</p>
+            </div>
+
+            <div class="management-section">
+                
+                <div class="section-top-bar">
+                    <h3>Historial y Estado de Períodos</h3>
+                    <button id="crearPeriodo">Nuevo Periodo </button>
+                </div>
+
+                <div class="page-buttons">
+                    <button id="button-next" type="button">Siguiente</button>
+                    <p id="page-act"> 1</p>
+                    <button id="button-back" type="button">Anterior</button>
+
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Período</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de Cierre</th>
+                            <th>Estado del Sistema</th>
+                            <th>Acciones Disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-content">
+                        <tr>
+                            <td></td>
+                            <td>2026-1</td>
+                            <td>09/03/2026</td>
+                            <td>10/07/2026</td>
+                            <td><span class="status-pill status-open">Abierto</span></td>
+                            <td>
+                                <button class="btn-table btn-view">Consultar Alumnos</button>
+                                <button class="btn-table btn-danger">Cerrar Período</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>2025-2</td>
+                            <td>06/10/2025</td>
+                            <td>14/02/2026</td>
+                            <td><span class="status-pill status-closed">Cerrado / Finalizado</span></td>
+                            <td>
+                                <button class="btn-table btn-view">Consultar Reporte</button>
+                                <button class="btn-table btn-disabled" disabled>Cerrado</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+
+    <script>
+        const tableContent = document.getElementById("table-content");
+        let paginaActual = 1;
+        let paginasTotales = 1;
+
+        // Hacemos que el paginado siempre empieze en uno mediante una variable global 
+        const paginado = document.getElementById("page-act");
+        paginado.textContent = paginaActual;
+
+        // Botones de paginado
+
+        const botonSiguente = document.getElementById("button-next");
+        const botonAnterior = document.getElementById("button-back");
+
+        const obtenerPeriodos = async () =>{
+            console.log(paginaActual);
+            paginaActual = paginado.textContent || 1; // Si no existe ninguna pagina,
+            console.log("despues:")
+            console.log(paginaActual);
+            // verificamos si no es un numero
+            
+            if (isNaN(paginaActual)){
+                console.log("Error: Esta intentando paginar otro tipo de dato. No es posible.");
+                paginaActual = 2; // reseteamos a 1
+            }try {
+                const respuesta = await fetch(`/admin/obtener_periodos?page=${paginaActual}`); //obtenemos los periodos 
+                console.log("Respuesta al obtener periodos");
+                console.log(respuesta);
+                if (respuesta.ok){ // Si la respuesta se recibo con exito, retornamos el vector resultante
+                    const periodos = await respuesta.json() // convertimos la repsuesta a json para poder manipularla en javascript. Nota: JSON : JAVASCRIPT OBJECT NOTATION
+
+                    console.log("\n\nDatos de los periodos obtenidos en formato JSON: ");
+                    console.log(periodos);
+                    
+                    // Cambiamos la cantidad de paginas totales
+
+                    paginasTotales = periodos.totalPaginas;
+
+                    return periodos;
+                } else{
+                    console.log("Hubo un error al obtener los datos de los periodos.")
+                    throw new Error("Ha ocurrido un error el obtener los datos de los periodos");
+                }
+            }catch(error){
+                console.log("Ha ocurrido un error");
+                console.log(error)
+            }
+            
+        }
+
+        const dibujarPeriodos = async ()=>{
+            // Obtenemos el contenedor de las tablas
+            const contenidoTabla = document.getElementById("table-content");
+
+            // Limpiamos primeramente la tabla, para evitar residuos.
+            contenidoTabla.innerHTML = ""; // Removemos todo el html interno que contenga
+
+        
+            try{
+                // Obtenemos los periodos:
+                const datos = await obtenerPeriodos();
+                const periodos = datos.rows; // obtenemos el array de periodos
+               
+                
+
+                // Iteramos los periodos y agregamos los elementos :
+
+
+                periodos.forEach(p => {
+                    const fila = document.createElement("tr");
+                    
+                    if (p.estadoPeriodo == "activo"){
+                        fila.innerHTML = `
+                            <td></td>
+                            <td>${p.periodoCodigo}</td>
+                            <td>00000</td>
+                            <td>0000000</td>
+                            <td><span class="status-pill status-open">Abierto</span></td>
+                            <td>
+                                <button class="btn-table btn-view">Consultar</button>
+                                <button class="btn-table btn-danger">Cerrar Período</button>
+                            </td>
+                        `
+                    }else{
+                        fila.innerHTML = `
+                            <td></td>
+                            <td>${p.periodoCodigo}</td>
+                            <td>00000</td>
+                            <td>0000000</td>
+                            <td><span class="status-pill status-close">inactivo</span></td>
+                            <td>
+                                <button class="btn-table btn-view">Consultar</button>
+                            </td>
+                        `
+                    }
+
+                    // Insertamos el contenido
+                    contenidoTabla.appendChild(fila);
+
+
+                });
+
+
+            }catch (error){
+                console.log("Ha ocurrido un error")
+                console.log(error);
+                contenidoTabla.tableContent = "Ha ocurrido un error al obtener los datos";
+            }
+
+        }
+
+
+        // Asignamos funcionalidad a los botones:
+
+
+        // Ejecutamos la funcion al cargar el html
+
+        botonSiguente.addEventListener("click", async()=>{
+            console.log("click detectado");
+            console.log(`Paginas totales: ${paginasTotales}`)
+            if (paginaActual < paginasTotales){
+                console.log("Sumando..")
+                paginaActual++;
+                paginado.textContent = paginaActual;
+
+                await dibujarPeriodos();
+            }
+        });
+
+        botonAnterior.addEventListener("click", async ()=>{
+            console.log("click detectado");
+            console.log(`Paginas totales: ${paginasTotales}`)
+            if (paginaActual > 1){
+                console.log("Restando..")
+                paginaActual--;
+                paginado.textContent = paginaActual;
+                console.log(paginaActual);
+                await dibujarPeriodos();
+            }      
+        });
+
+        // Obtenemos el boton de creacion de periodos
+        const crearPeriodo = document.getElementById("crearPeriodo");
+
+        crearPeriodo.addEventListener("click",()=>{
+            window.location.href = "/admin/nuevo_periodo";
+            console.log("redirijimos a la creacion de un periodo");
+
+        });
+
+        // Manejo de notificaciones
+
+    
+        const escucharErrores = ()=>{
+            const mensaje = "<%= locals.mensaje %>" //obtenemos el mensaje que recibimos de ejs
+            const tipoMensaje = "<%= locals.tipo %>" // Obtenemos el tipo de alerta
+            const divAlerta = document.getElementById("divAlerta");
+            const textoAlerta = document.getElementById("textoAlerta");
+
+            console.log(mensaje);
+            console.log(tipoMensaje);
+            if (mensaje){// Verificamos si se obtuvo algun mensaje
+                // si se obtuvo un mensaje, hacemos que la alerta se muestre.
+                divAlerta.classList.add("mostrar");
+                textoAlerta.textContent = mensaje; // asignamos el mensaje
+            } 
+
+            // Asignamos el tipo de alerta como clase
+            if (tipoMensaje == "success"){
+                divAlerta.classList.add("success");
+            }else if(tipoMensaje == "error"){
+                divAlerta.classList.add("error");
+            }
+        }
+       
+
+        document.addEventListener("DOMContentLoaded", dibujarPeriodos);
+        document.addEventListener("DOMContentLoaded",escucharErrores);
+        
+    </script>
+
+</body>
+</html>

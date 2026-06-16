@@ -4,35 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Control de Períodos</title>
-    <link rel="stylesheet" href="Login_style.css">
+    <link rel="stylesheet" href="adminStyle.css">
 </head>
 <body>
 
-        <aside class="sidebar admin-sidebar">
+    <div class="container">
+        <header class="sidebar">
+            
             <div class="user-profile">
-                <div class="avatar admin-avatar">(Inserte un perfil profesional)</div>
                 <h3>Panel Admin</h3>
                 <p class="role">Control de Ciclos</p>
             </div>
+            
             <nav class="menu">
                 <a href="#" class="active">Gestión de Períodos</a>
-                <a href="/" class="logout-btn">Cerrar Sesión</a>
+                <a href="/" id="logout-btn">Cerrar Sesión</a>
             </nav>
-        </aside>
+           
+
+        </header>
 
         <main class="main-content">
-            <header class="content-header">
+            <div class="content-header">
                 <h2>Administración de Períodos</h2>
-                <p>Configura las fechas de apertura y cierre de preinscripciones para los estudiantes.</p>
-            </header>
+                <p>Visualiza los periodes de las preinscripciones de verano existentes</p>
+            </div>
 
-            <div class="management-section period-control-box">
+            <div class="management-section">
                 
                 <div class="section-top-bar">
                     <h3>Historial y Estado de Períodos</h3>
-                    <button class="btn-action btn-success" onclick="simularApertura()">
-                        <i>➕</i> Aperturar Nuevo Período
-                    </button>
+                    <button class="crearPeriodo">Nuevo Periodo </button>
                 </div>
 
                 <table class="admin-table">
@@ -47,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="active-period-row">
+                        <tr>
                             <td></td>
                             <td>2026-1</td>
                             <td>09/03/2026</td>
@@ -73,6 +75,7 @@
                 </table>
             </div>
         </main>
+    </div>
 
 </body>
 </html>

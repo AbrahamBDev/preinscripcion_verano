@@ -29,9 +29,6 @@ router.get("/principal", isUser, async (req,res) => {
     res.send("Bienvenido de vuelta usuario");
 })
 
-router.get("/dashboard", isAdmin, async (req,res) => {
-    res.send("Bienvenido de vuelta administrador");
-})
 
 
 // Exportamos la ruta para luego importarla en el otro modulo

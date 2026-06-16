@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo periodo</title>
+    <link rel="stylesheet" href="/css/nuevo_periodo.css">
+</head>
+<body>
+
+    <div class="container-main">
+        <form action="/admin/nuevo_periodo" method="post">
+            <div class="container-info">
+            
+
+                <div id="imgContainer">
+                    <img src="/img/area.jpg" alt="">
+                </div>
+
+
+                
+                <div id="encabezado">
+                    <h2>Apertura de Intensivo</h2>
+                    <p>Para registrar un intensivo, llene los campos correspondientes.</p>                    
+                </div>
+
+                <div id="divAlerta">
+                    <% if (locals.error){%>
+                        <p id="textoAlerta"><%=error%></p>
+                    <%}else{%>
+                        <p id="textoAlerta"></p>
+                    <%}%>
+                </div>
+                <div class="input-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ingrese el nombre del periodo" required>
+                </div>
+                <div class="input-group">
+                    <label for="periodo">Periodo</label>
+                    <input type="text" name="periodo" id="periodo" maxlength="6" placeholder="2026-1" required>
+                </div>
+
+                
+                <div class="input-group">
+                    <label for="comienzo">Fecha de comienzo</label>
+                    <input type="date" name="fechaComienzo" id="fechaComienzo">
+
+                </div>
+
+                <div class="input-group">
+                    <label for="fecha">Fecha de finalización</label>
+                    <input type="date" name="fechaFinal" id="fechaFinal">
+
+                </div>
+
+            
+                <button id="submit" type="submit">Crear</button>
+                
+            
+            </div>
+        </form>
+
+    </div>
+
+
+    <script>
+
+         const escucharErrores = ()=>{
+            const mensaje = "<%= locals.mensaje %>" //obtenemos el mensaje que recibimos de ejs
+            const tipoMensaje = "<%= locals.tipo %>" // Obtenemos el tipo de alerta
+            const divAlerta = document.getElementById("divAlerta");
+            const textoAlerta = document.getElementById("textoAlerta");
+
+            console.log(mensaje);
+            console.log(tipoMensaje);
+            if (mensaje){// Verificamos si se obtuvo algun mensaje
+                // si se obtuvo un mensaje, hacemos que la alerta se muestre.
+                divAlerta.classList.add("mostrar");
+                textoAlerta.textContent = mensaje; // asignamos el mensaje
+            } 
+
+            // Asignamos el tipo de alerta como clase
+            if (tipoMensaje == "success"){
+                divAlerta.classList.add("success");
+            }else if(tipoMensaje == "error"){
+                divAlerta.classList.add("error");
+            }
+        }
+       
+
+        document.addEventListener("DOMContentLoaded",escucharErrores);
+
+    </script>
+    
+</body>
+</html>

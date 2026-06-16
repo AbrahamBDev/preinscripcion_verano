@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname,"modules/public")));
 // - Rutas
 
 app.use("/",require("./modules/routes/user.js")) // - Inicio de sesion, registro.
-
+app.use("/admin",require("./modules/routes/admin.js"));
 
 
 // == Enrrutamiento

@@ -5,7 +5,7 @@ const session = require("express-session");
 const isUser = async (req,res,next) =>{
     console.log("- Se ha entrado a la verificacion de usuario");
     if (req.session.rol != "usuario"){ // Si no es usuario, redirijir a la ruta de administrador.
-        return res.redirect("/dashboard");
+        return res.redirect("/admin/dashboard");
     }else{
         next(); // si es usuario, entonces, continuar.
     }
@@ -32,7 +32,7 @@ const isLogged =  async (req,res,next) =>{
         if (req.session.rol == "usuario"){
             return res.redirect("/principal");
         }else{
-            return res.redirect("/dashboard");
+            return res.redirect("/admin/dashboard");
         }
     }else{
         // no esta logeado

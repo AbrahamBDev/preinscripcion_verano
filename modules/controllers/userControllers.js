@@ -96,7 +96,7 @@ const redireccionController = async (req,res)=>{
     const rol = req.session.rol;
     if (rol){
         if (rol == "admin"){
-            return res.redirect("/dashboard");
+            return res.redirect("/admin/dashboard");
 
         }else if(rol == "usuario"){
             return res.redirect("/principal");

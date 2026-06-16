@@ -15,7 +15,8 @@ const inicioQuery = async (email) =>{
 
         console.log("- Cerrando conexion.");
     }catch(err){
-        
+        console.log("Ha ocurrido un error");
+        console.log(err);
     }
 }
 
