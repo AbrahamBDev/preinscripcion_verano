@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/impresion.css">
     <title>Inscripciones</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
 
     <div id="contenedor">
         <div id="header">
-            <img src="../img/unerg.png" alt="">
+            <img src="/img/unerg.png" alt="">
             <div id="header-info">
                 <h5>Republica Bolivariana de Venezuela</h5>
                 <h5>Universidad Nacional Experimental Romulo Gallegos</h5>
@@ -21,7 +21,7 @@
    
         <div id="container-info">
         <h3>Preinscriciones</h3>
-        <p>Periodo: </p>
+        <p>Periodo: <%=periodo%></p>
         <p>Carrera: : (601) INGENIERIA EN INFORMATICA - INGENIERIA DE SISTEMAS (SAN JUAN DE
 LOS MORROS)</p>
 
@@ -30,21 +30,38 @@ LOS MORROS)</p>
 
         <table id="tabla">
             <thead>
-                <th class="celda-corta">Cod Materia</th>
-                <th class="celda-larga">Nombre Materia</th>
-                <th class="celda-corta">Preinscripciones</th>
+                <tr>
+                    <th class="celda-corta">Cod Materia</th>
+                    <th class="celda-larga">Nombre Materia</th>
+                    <th class="celda-corta">Preinscripciones</th>
+                </tr>
+
             </thead>
 
             <tbody>
-                <td>2141</td>
-                <td>Matematica</td>
-                <td>23</td>
+                <% inscripciones.forEach((materia)=>{%>
+                <tr>
+                    <td><%=materia.codigo%></td>
+                    <td><%=materia.nombre%></td>
+                    <td><%=materia.cantidad%></td>
+                </tr>
+                <% }); %>
+
             </tbody>
             
 
         </table>
      </div>
     
+     <script>
+
+        window.addEventListener("DOMContentLoaded",()=>{
+            // Imprimimos el documento.
+            window.print();
+
+        });
+
+     </script>
 
 
 

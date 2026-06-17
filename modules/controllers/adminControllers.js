@@ -1,17 +1,11 @@
-const {solicitarPeriodos,solicitarPeriodo, existePeriodoAbierto,existeColisionFechas} = require("../models/solicitarPeriodosQuery.js");
+const {solicitarPeriodos,solicitarPeriodoParaImpresion,solicitarPeriodo,obtenerInscripcionesPeriodo, existePeriodoAbierto,existeColisionFechas} = require("../models/solicitarPeriodosQuery.js");
 const {insertarPeriodo} = require("../models/insertarPeriodoQuery.js");
 const {cerrarPeriodoQuery} = require("../models/cerrarPeriodoQuery.js");
 const solicitudPeriodos = async (req,res)  =>{
     try{
        
-        console.log(req.query.page);
-
-        const paginaActual = parseInt(req.query.page) || 1 // obtenemos el queryparams (Lo que viene despues del ?)
-        //                          cada pagina tendra 10
-        const offset = (paginaActual-1) * 10; // calculamos de donde empezará la busqueda con el fin de hacer el paginado
-        const rows = await solicitarPeriodos(offset);
-        
-     
+        const rows = await solicitarPeriodos();
+    
         res.json(rows); // enviamos los datos en forma de json.
     }catch(err){
         res.status(500).json({error : "Hubo un error al obtener los datos"});
@@ -147,24 +141,38 @@ const imprimirPeriodo = async (req,res) => {
             return res.render("dashboard",{tipo:"error", mensaje:"No es posible obtener la consulta de las inscripciones"});
         }
 
-        const inscripciones = await obtenerInscripcionesPeriodo();
-        console.log("Inscripciones obtenidas:");
-        console.log(inscripciones);
+        const inscripciones = await obtenerInscripcionesPeriodo(periodoId);
+        const periodo = await solicitarPeriodoParaImpresion(periodoId);
+        console.log("LOS DATOS OBTENIDOS SON:");
+        console.log(periodo);
+
+        const codigoPeriodo = periodo[0].periodoNum;
+      
+        
         if (!inscripciones){
             return res.render("dashboard",{tipo:"error", mensaje:"Hubo un error al obtener las inscripciones"});
         }
 
-        if (inscripciones != 0){ // Si es diferente de 0, entonces, podemos enviar las inscripciones a el frontend e imprimirlo
-            console.log("renderizando....");
-            res.render("impresion_materias", {inscripciones});
+        if (!periodo){
+            return res.render("dashboard",{tipo:"error", mensaje:"el periodo no existe"});
         }
 
+        /*
+        if (inscripciones.lenght == 0){ 
+            return res.render("dashboard",{tipo:"error", mensaje:"No se encontro ninguna inscripcion a el periodo dado"});
+        }
+        */
+
+        console.log("renderizando....");
+        res.render("impresion_total", {inscripciones, periodo : codigoPeriodo});
+
     } catch (error) {
-        
+        console.log("Ha ocurrido un error.");
+        console.log(error);
+        return res.render("dashboard",{tipo:"error", mensaje:"Hubo un error al intentar obtener la consulta"});
     }
 
-    
 
 }
 
-module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController};
+module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController,imprimirPeriodo};

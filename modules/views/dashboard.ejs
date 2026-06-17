@@ -62,12 +62,6 @@
                     <button id="crearPeriodo">Nuevo Periodo </button>
                 </div>
 
-                <div class="page-buttons">
-                    <button id="button-next" type="button">Siguiente</button>
-                    <p id="page-act"> 1</p>
-                    <button id="button-back" type="button">Anterior</button>
-
-                </div>
 
                 <table class="admin-table">
                     <thead>
@@ -91,41 +85,20 @@
 
     <script>
         const tableContent = document.getElementById("table-content");
-        let paginaActual = 1;
-        let paginasTotales = 1;
-
-        // Hacemos que el paginado siempre empieze en uno mediante una variable global 
-        const paginado = document.getElementById("page-act");
-        paginado.textContent = paginaActual;
-
-        // Botones de paginado
-
-        const botonSiguente = document.getElementById("button-next");
-        const botonAnterior = document.getElementById("button-back");
 
         const obtenerPeriodos = async () =>{
-            console.log(paginaActual);
-            paginaActual = paginado.textContent || 1; // Si no existe ninguna pagina,
-            console.log("despues:")
-            console.log(paginaActual);
-            // verificamos si no es un numero
-            
-            if (isNaN(paginaActual)){
-                console.log("Error: Esta intentando paginar otro tipo de dato. No es posible.");
-                paginaActual = 2; // reseteamos a 1
-            }try {
-                const respuesta = await fetch(`/admin/obtener_periodos?page=${paginaActual}`); //obtenemos los periodos 
+ 
+            try {
+                const respuesta = await fetch(`/admin/obtener_periodos`); //obtenemos los periodos 
                 console.log("Respuesta al obtener periodos");
                 console.log(respuesta);
                 if (respuesta.ok){ // Si la respuesta se recibo con exito, retornamos el vector resultante
                     const periodos = await respuesta.json() // convertimos la repsuesta a json para poder manipularla en javascript. Nota: JSON : JAVASCRIPT OBJECT NOTATION
 
-                    console.log("\n\nDatos de los periodos obtenidos en formato JSON: ");
+                    console.log("\nDatos de los periodos obtenidos en formato JSON: ");
                     console.log(periodos);
                     
                     // Cambiamos la cantidad de paginas totales
-
-                    paginasTotales = periodos.totalPaginas;
 
                     return periodos;
                 } else{
@@ -177,7 +150,7 @@
                             <td>${p.fechaFinal}</td>
                             <td><span class="status-pill status-close">inactivo</span></td>
                             <td>
-                                <a href="/admin/consultar_periodo/${p.periodoId}" class="boton-consultar-periodo">Consultar</a>
+                                <a href="/admin/imprimir_periodo/${p.periodoId}" class="boton-consultar-periodo">Consultar</a>
                             </td>
                         `
                     }
@@ -194,34 +167,6 @@
             }
         }
 
-
-        // Asignamos funcionalidad a los botones:
-
-
-        // Ejecutamos la funcion al cargar el html
-
-        botonSiguente.addEventListener("click", async()=>{
-            console.log("click detectado");
-            console.log(`Paginas totales: ${paginasTotales}`)
-            if (paginaActual < paginasTotales){
-                console.log("Sumando..")
-                paginaActual++;
-                paginado.textContent = paginaActual;
-                await dibujarPeriodos();
-            }
-        });
-
-        botonAnterior.addEventListener("click", async ()=>{
-            console.log("click detectado");
-            console.log(`Paginas totales: ${paginasTotales}`);
-            if (paginaActual > 1){
-                console.log("Restando..");
-                paginaActual--;
-                paginado.textContent = paginaActual;
-                console.log(paginaActual);
-                await dibujarPeriodos();
-            }      
-        });
 
         // Obtenemos el boton de creacion de periodos
         const crearPeriodo = document.getElementById("crearPeriodo");

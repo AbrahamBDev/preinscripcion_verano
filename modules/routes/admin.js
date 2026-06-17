@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController} = require("../controllers/adminControllers.js");
+const {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController, imprimirPeriodo} = require("../controllers/adminControllers.js");
 const verificacionPeriodo = require("../middlewares/periodo_verification.js");
 const {isAdmin} = require("../middlewares/login_verification.js");
 
@@ -21,7 +21,7 @@ router.get("/cerrar_periodo/:id",cerrarPeriodoVista);
 
 router.post("/cerrar_periodo",cerrarPeriodoController);
 
-router.get("/imprimir_periodo/:id", );
+router.get("/imprimir_periodo/:id", imprimirPeriodo);
 
 
 

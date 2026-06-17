@@ -7,9 +7,9 @@ const obtenerInscripcionesPeriodo = async (id) =>{
         conn = await db.getConnection(); 
 
         query = 
-                `Select m.nombre ,count(i.id_materia) as cantidad from inscripciones AS i
+                `Select p.periodo as periodo ,m.codigo as codigo,m.nombre as nombre ,count(i.id_materia) as cantidad from inscripciones AS i
                 JOIN periodos as p on (p.id = i.id_periodo)
-                JOIN materia as m on (m.id = i.id_materia)
+                JOIN materias as m on (m.id = i.id_materia)
                 WHERE i.id_periodo = ?
                 GROUP BY m.nombre
         `;
@@ -32,11 +32,11 @@ const obtenerInscripcionesPeriodo = async (id) =>{
 }
 
 
-const solicitarPeriodo = async (id) =>{
+const solicitarPeriodoParaImpresion = async (id) =>{
     let conn;
     try{
         conn = await db.getConnection();
-        const query = `SELECT p.nombre as periodoNombre, p.id as periodoId, e.nombre as estado FROM periodos as p JOIN estado_periodo as e on (e.id = p.estado_id) WHERE p.id = ? and e.nombre = "activo"`;
+        const query = `SELECT p.id as periodoId,p.periodo as periodoNum, e.nombre as estado FROM periodos as p JOIN estado_periodo as e on (e.id = p.estado_id) WHERE p.id = ?`;
         const periodo = await conn.query(query,id);
         await conn.end();
         return periodo;
@@ -50,27 +50,39 @@ const solicitarPeriodo = async (id) =>{
     }
 }
 
-const solicitarPeriodos = async (offset) =>{
+const solicitarPeriodo = async (id) =>{
+    let conn;
+    try{
+        conn = await db.getConnection();
+        const query = `SELECT p.nombre as periodoNombre, p.id as periodoId,p.periodo as periodoNum, e.nombre as estado FROM periodos as p JOIN estado_periodo as e on (e.id = p.estado_id) WHERE p.id = ? and e.nombre = "activo"`;
+        const periodo = await conn.query(query,id);
+        await conn.end();
+        return periodo;
+
+    }catch(err){
+        console.log("Ha ocurrido un error al obtener un periodo");
+        if (conn){
+            await conn.end();
+        }
+        throw err;
+    }
+}
+
+const solicitarPeriodos = async () =>{
     let conn;
     try{
         //Creamos conexion con la base de datos;
         conn = await db.getConnection();
 
         // Creamos la consulta
-        const query = `SELECT p.id AS periodoId,DATE_FORMAT(p.fecha_comienzo, "%Y-%m-%d") as fechaComienzo, DATE_FORMAT(p.fecha_final,"%Y-%m-%d") as fechaFinal, p.nombre AS periodoNombre, p.periodo AS periodoCodigo, ep.nombre AS estadoPeriodo FROM periodos AS p JOIN estado_periodo AS ep ON (p.estado_id = ep.id) ORDER BY periodoId DESC LIMIT ? OFFSET ?`;
+        const query = `SELECT p.id AS periodoId,DATE_FORMAT(p.fecha_comienzo, "%Y-%m-%d") as fechaComienzo, DATE_FORMAT(p.fecha_final,"%Y-%m-%d") as fechaFinal, p.nombre AS periodoNombre, p.periodo AS periodoCodigo, ep.nombre AS estadoPeriodo FROM periodos AS p JOIN estado_periodo AS ep ON (p.estado_id = ep.id) ORDER BY periodoId DESC`;
 
         // Realizamos la consulta.
 
-        const rows = await conn.query(query,[10,offset]);
+        const rows = await conn.query(query,[]);
 
-        // Consultamos la cantidad de periodos existentes para saber cuantas paginas existiran.
-        const queryPaginas = await conn.query("SELECT COUNT(*) as paginasTotales FROM periodos",[]);
-        const totalRegistros = parseInt(queryPaginas[0].paginasTotales); // Parseamos de bigint a int
-        const totalPaginas = Math.ceil(totalRegistros / 10);
         // creamos un nuevo objeto con los datos necesarios para el frontend
-        const datos = {
-            rows, totalRegistros, totalPaginas
-        }
+        const datos = {rows}
 
         console.log(datos);
 
@@ -134,4 +146,4 @@ const existeColisionFechas = async (fechaComienzo, fechaFinal)=>{
 
 
 
-module.exports = {solicitarPeriodo,solicitarPeriodos, existePeriodoAbierto, existeColisionFechas, obtenerInscripcionesPeriodo};
+module.exports = {solicitarPeriodoParaImpresion,obtenerInscripcionesPeriodo,solicitarPeriodo,solicitarPeriodos, existePeriodoAbierto, existeColisionFechas, obtenerInscripcionesPeriodo};
