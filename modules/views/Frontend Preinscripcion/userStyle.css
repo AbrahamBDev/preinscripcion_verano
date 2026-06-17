@@ -1,0 +1,186 @@
+:root {
+    --bg-main: #0b0f19;          
+    --bg-navbar: #16224f;        
+    --card-gradient: linear-gradient(135deg, #161f38 0%, #0f1424 100%); 
+    --text-primary: #ffffff;     
+    --text-secondary: #94a3b8;   
+    --accent-blue: #2563eb;      
+    --accent-blue-hover: #1d4ed8;
+    --accent-red: #4c1d1d;       
+    --accent-red-hover: #7f1d1d;
+    --success-green: #10b981;    
+    --success-bg: rgba(16, 185, 129, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+.navbar-top {
+    background-color: var(--bg-navbar);
+    display: flex !important;              
+    justify-content: space-between !important;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.nav-brand h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.nav-brand p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+
+.nav-actions {
+    display: flex !important;
+    gap: 12px;
+}
+
+
+.btn-top-nav, .btn-top-nav:visited {
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+
+.btn-top-nav.active-nav {
+    background-color: #0b0f19 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-top-nav.active-nav:hover {
+    background-color: #161f38 !important;
+}
+
+
+.btn-top-nav.logout-nav {
+    background-color: var(--accent-red) !important;
+}
+
+.btn-top-nav.logout-nav:hover {
+    background-color: var(--accent-red-hover) !important;
+}
+
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-header h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.content-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.enrollment-box {
+    background: var(--card-gradient);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.enrollment-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-open {
+    background-color: var(--success-bg);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 25px;
+}
+
+.status-alert.success-alert {
+    background-color: rgba(16, 185, 129, 0.05);
+    border-left: 4px solid var(--success-green);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+}
+
+.status-alert h4 {
+    color: var(--success-green);
+    margin-bottom: 5px;
+}
+
+.status-alert p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.download-area p {
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* Botón de descarga azul */
+.btn-download, .btn-download:visited {
+    display: inline-block;
+    background-color: var(--accent-blue) !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-download:hover {
+    background-color: var(--accent-blue-hover) !important;
+}
