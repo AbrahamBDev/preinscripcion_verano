@@ -163,14 +163,14 @@ body {
     font-size: 14px;
 }
 
-.download-area p {
+.directions p {
     color: var(--text-secondary);
     margin-bottom: 15px;
     font-size: 14px;
 }
 
-/* Botón de descarga azul */
-.btn-download, .btn-download:visited {
+
+.btn-directions, .btn-directions:visited {
     display: inline-block;
     background-color: var(--accent-blue) !important;
     color: var(--text-primary) !important;
@@ -181,6 +181,6 @@ body {
     transition: background-color 0.2s ease;
 }
 
-.btn-download:hover {
+.btn-directions:hover {
     background-color: var(--accent-blue-hover) !important;
 }
