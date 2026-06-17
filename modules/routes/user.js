@@ -31,7 +31,6 @@ router.get("/principal", isUser, async (req,res) => {
 })
 
 
-
 // Exportamos la ruta para luego importarla en el otro modulo
 module.exports = router;
 

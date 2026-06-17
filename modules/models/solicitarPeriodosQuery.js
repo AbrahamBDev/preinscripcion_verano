@@ -5,12 +5,16 @@ const solicitarPeriodo = async (id) =>{
     let conn;
     try{
         conn = await db.getConnection();
-        const query = "SELECT nombre FROM periodos WHERE id = ?";
+        const query = `SELECT p.nombre as periodoNombre, p.id as periodoId, e.nombre as estado FROM periodos as p JOIN estado_periodo as e on (e.id = p.estado_id) WHERE p.id = ? and e.nombre = "activo"`;
         const periodo = await conn.query(query,id);
+        await conn.end();
         return periodo;
 
     }catch(err){
         console.log("Ha ocurrido un error al obtener un periodo");
+        if (conn){
+            await conn.end();
+        }
         throw err;
     }
 }
