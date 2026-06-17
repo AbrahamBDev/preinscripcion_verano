@@ -1,5 +1,6 @@
-const {solicitarPeriodos, existePeriodoAbierto,existeColisionFechas} = require("../models/solicitarPeriodosQuery.js");
-const {insertarPeriodo} = require("../models/insertarPeriodoQuery.js")
+const {solicitarPeriodos,solicitarPeriodo, existePeriodoAbierto,existeColisionFechas} = require("../models/solicitarPeriodosQuery.js");
+const {insertarPeriodo} = require("../models/insertarPeriodoQuery.js");
+const {cerrarPeriodoQuery} = require("../models/cerrarPeriodoQuery.js");
 const solicitudPeriodos = async (req,res)  =>{
     try{
        
@@ -90,14 +91,15 @@ const cerrarPeriodoVista = async (req,res) => {
             return res.render("dashboard",{tipo:"error", mensaje:"El periodo a cerrar no existe"});
         }
 
-        const periodo = await obtenerPeriodo();
+        const registro = await solicitarPeriodo(periodoId);
         
-        if (periodo.length == 0){
-            return res.render("dashboard",{tipo:"error", mensaje:"El Periodo no existe."});
+        if (registro.length == 0){
+            return res.render("dashboard",{tipo:"error", mensaje:"No se encontro ningun periodo"});
         }
 
-        const periodo = periodos[0]; // Obtenemos solo el primer registro del arreglo
-
+        const periodo = registro[0]; // Obtenemos solo el primer registro del arreglo
+        console.log("periodo a cerrar:");
+        console.log(periodo);
         res.render("cerrar_periodo",{periodo});
 
     }catch(err){
@@ -109,5 +111,31 @@ const cerrarPeriodoVista = async (req,res) => {
 
 }
 
+const cerrarPeriodoController = async (req,res) => {
+    try{
+        // Obtenemos el id del periodo a cerrar:
+        const periodoId = req.body.periodoId;
+        console.log("Ha entrado a cerrar periodo controller");
+        console.log(periodoId);
+        if (!periodoId){
+            return res.render("dashboard",{tipo:"error", mensaje:"Ha ocurrido un error al cerrar el periodo"});
+        }
 
-module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista};
+        await cerrarPeriodoQuery(periodoId);
+
+        console.log("El periodo ha sido cerrado.");
+        
+        res.render("dashboard",{tipo:"success", mensaje:"El periodo se ha cerrado con exito"});
+
+    }catch(err) {
+        console.log("Ha ocurrido un error al cerrar un periodo.");
+        console.log("Mas informacion en:");
+        console.log(err);
+        return res.render("dashboard",{tipo:"error", mensaje:"Ha ocurrido un error al"});
+    }
+
+
+}
+
+
+module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController};
