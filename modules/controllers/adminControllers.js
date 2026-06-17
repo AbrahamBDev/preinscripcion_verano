@@ -138,4 +138,33 @@ const cerrarPeriodoController = async (req,res) => {
 }
 
 
+const imprimirPeriodo = async (req,res) => {
+    
+    try {
+        const periodoId = req.params.id // Obtenemos el id del periodo
+         // Tomamos la id del periodo que viene en el req
+        if (!periodoId){ 
+            return res.render("dashboard",{tipo:"error", mensaje:"No es posible obtener la consulta de las inscripciones"});
+        }
+
+        const inscripciones = await obtenerInscripcionesPeriodo();
+        console.log("Inscripciones obtenidas:");
+        console.log(inscripciones);
+        if (!inscripciones){
+            return res.render("dashboard",{tipo:"error", mensaje:"Hubo un error al obtener las inscripciones"});
+        }
+
+        if (inscripciones != 0){ // Si es diferente de 0, entonces, podemos enviar las inscripciones a el frontend e imprimirlo
+            console.log("renderizando....");
+            res.render("impresion_materias", {inscripciones});
+        }
+
+    } catch (error) {
+        
+    }
+
+    
+
+}
+
 module.exports = {solicitudPeriodos,nuevoPeriodo,cerrarPeriodoVista,cerrarPeriodoController};

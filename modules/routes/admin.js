@@ -21,6 +21,8 @@ router.get("/cerrar_periodo/:id",cerrarPeriodoVista);
 
 router.post("/cerrar_periodo",cerrarPeriodoController);
 
+router.get("/imprimir_periodo/:id", );
+
 
 
 module.exports = router;

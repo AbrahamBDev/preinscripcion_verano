@@ -5,7 +5,8 @@ USE unerg;
 CREATE TABLE materias(
     id INT PRIMARY KEY AUTO_INCREMENT ,
     codigo varchar(10) UNIQUE NOT NULL,
-    nombre varchar(30) NOT NULL
+    nombre varchar(80) NOT NULL,
+    uc int not null
 );
 
 
@@ -51,7 +52,7 @@ CREATE TABLE inscripciones(
 );
 
 
-INSERT INTO materias (codigo, nombre)
+INSERT INTO materias (codigo,nombre,uc)
 VALUES 
 ("IM1421", "MATEMÁTICA I", 5),
 ("IC1222", "FUNDAMENTOS DE LA INFORMÁTICA", 3),

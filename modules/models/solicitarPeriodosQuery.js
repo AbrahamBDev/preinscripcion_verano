@@ -1,6 +1,37 @@
 const db = require("./database.js");
 
 
+const obtenerInscripcionesPeriodo = async (id) =>{
+    let conn;
+    try {
+        conn = await db.getConnection(); 
+
+        query = 
+                `Select m.nombre ,count(i.id_materia) as cantidad from inscripciones AS i
+                JOIN periodos as p on (p.id = i.id_periodo)
+                JOIN materia as m on (m.id = i.id_materia)
+                WHERE i.id_periodo = ?
+                GROUP BY m.nombre
+        `;
+        
+        const inscripciones = await conn.query(query,[id]);
+        console.log(inscripciones);
+
+        await conn.end();
+        return inscripciones;
+
+
+    }catch (err) {
+        console.log(err)
+        if (conn){
+            await conn.end();
+        }
+    }
+
+
+}
+
+
 const solicitarPeriodo = async (id) =>{
     let conn;
     try{
@@ -103,4 +134,4 @@ const existeColisionFechas = async (fechaComienzo, fechaFinal)=>{
 
 
 
-module.exports = {solicitarPeriodo,solicitarPeriodos, existePeriodoAbierto, existeColisionFechas};
+module.exports = {solicitarPeriodo,solicitarPeriodos, existePeriodoAbierto, existeColisionFechas, obtenerInscripcionesPeriodo};
