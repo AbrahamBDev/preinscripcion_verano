@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Variables y Reset Global
+   ========================================================================== */
+:root {
+    --bg-main: #0b0f19;          /* Fondo oscuro profundo de la app */
+    --bg-navbar: #16224f;        /* Azul marino de la barra superior */
+    --card-gradient: linear-gradient(135deg, #161f38 0%, #0f1424 100%); /* Bloque central */
+    --text-primary: #ffffff;     
+    --text-secondary: #94a3b8;   
+    --accent-blue: #2563eb;      /* Azul brillante (Inscribir / Nuevo periodo) */
+    --accent-blue-hover: #1d4ed8;
+    --accent-red: #4c1d1d;       /* Rojo oscuro (Cerrar sesión) */
+    --accent-red-hover: #7f1d1d;
+    --success-green: #10b981;    
+    --success-bg: rgba(16, 185, 129, 0.1);
+    
+    /* Variables nuevas para Inputs/Formularios */
+    --bg-input: #0b0f19;
+    --border-input: rgba(255, 255, 255, 0.15);
+    --border-input-focus: #2563eb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ==========================================================================
+   Barra Superior (Navbar) - Compartida
+   ========================================================================== */
+.navbar-top {
+    background-color: var(--bg-navbar);
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.nav-brand h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.nav-brand p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.nav-actions {
+    display: flex !important;
+    gap: 12px;
+}
+
+.btn-top-nav, .btn-top-nav:visited {
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.btn-top-nav.active-nav {
+    background-color: #0b0f19 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-top-nav.active-nav:hover {
+    background-color: #161f38 !important;
+}
+
+.btn-top-nav.logout-nav {
+    background-color: var(--accent-red) !important;
+}
+
+.btn-top-nav.logout-nav:hover {
+    background-color: var(--accent-red-hover) !important;
+}
+
+/* ==========================================================================
+   Estructura del Contenido de las Vistas
+   ========================================================================== */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-header h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.content-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.enrollment-box {
+    background: var(--card-gradient);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 35px;
+    width: 100%;
+    max-width: 800px; /* Evita que el formulario se estire demasiado */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 25px;
+}
+
+/* Elementos específicos de usuario.html (Inscripción Exitosa) */
+.enrollment-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-open {
+    background-color: var(--success-bg);
+    color: var(--success-green);
+    border: 1px solid var(--success-green);
+}
+
+.status-alert.success-alert {
+    background-color: rgba(16, 185, 129, 0.05);
+    border-left: 4px solid var(--success-green);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+}
+
+.status-alert h4 {
+    color: var(--success-green);
+    margin-bottom: 5px;
+}
+
+.status-alert p {
+    color: var(--text-secondary);
+}
+
+.btn-download, .btn-download:visited {
+    display: inline-block;
+    background-color: var(--accent-blue) !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-download:hover {
+    background-color: var(--accent-blue-hover) !important;
+}
+
+/* ==========================================================================
+   NUEVO: Estilos específicos para Formulario (inscripcion.html)
+   ========================================================================== */
+.form-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-instructions {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.enrollment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Contenedor de cada Select */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* El elemento Select con estética oscura */
+.materia-select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-input);
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Efecto cuando haces click en el select */
+.materia-select:focus {
+    border-color: var(--border-input-focus);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Estilo para las opciones internas del select en navegadores basados en Chromium */
+.materia-select option {
+    background-color: #0f1424;
+    color: var(--text-primary);
+    padding: 10px;
+}
+
+/* Botonera inferior del formulario */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha del cuadro */
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Botón Inscribir (Azul brillante) */
+.btn-enroll {
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-enroll:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.btn-enroll:active {
+    transform: scale(0.98);
+}
+
+/* Botón Cancelar (Grisáceo/Transparente discreto) */
+.btn-cancel, .btn-cancel:visited {
+    background-color: transparent;
+    color: var(--text-secondary) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none !important;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.btn-cancel:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+}

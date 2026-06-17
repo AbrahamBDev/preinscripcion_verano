@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiante | Inscripción Completada</title>
+    <link rel="stylesheet" href="userStyle.css"> 
+</head>
+<body>
+
+    <header class="navbar-top">
+        <div class="nav-brand">
+            <h2>Panel Estudiante</h2>
+            <p>Control de Ciclos</p>
+        </div>
+        <div class="nav-actions">
+            <a href="usuario.html" class="btn-top-nav active-nav">Preinscripción</a>
+            <a href="/" class="btn-top-nav logout-nav">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <header class="content-header">
+            <h2>Inscripción Procesada</h2>
+            <p>El sistema ha registrado tus asignaturas satisfactoriamente.</p>
+        </header>
+
+        <div class="enrollment-box">
+            <div class="enrollment-status-header">
+                <h3>Resumen de Carga Académica</h3>
+                <span class="status-pill status-open">Registrado</span>
+            </div>
+
+            <hr class="divider">
+
+            <div class="status-alert success-alert" style="margin-bottom: 20px;">
+                <h4>¡Comprobante Listo!</h4>
+                <p>Las siguientes materias han sido aseguradas para tu plan de estudios del ciclo <strong>2026-3</strong>.</p>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 25px;">
+                <label>Asignaturas Registradas:</label>
+                <div style="background: #0b0f19; padding: 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); margin-top: 5px;">
+                    <p style="margin-bottom: 10px; font-weight: 600;">🔹 <%= datos.materia1 %></p>
+                    <p style="font-weight: 600;">🔹 <%= datos.materia2 %></p>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">Inscripción efectuada el: <%= datos.fecha %></p>
+            </div>
+
+            <div class="form-actions" style="justify-content: flex-start; gap: 15px;">
+                <a href="usuario.html" class="btn-enroll" style="text-decoration: none; text-align: center;">
+                    Volver a Inicio
+                </a>
+                <a href="/descargar-planilla-pdf" class="btn-cancel" style="border-color: var(--accent-blue); color: var(--text-primary) !important;">
+                    📄 Descargar Planilla (PDF)
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
